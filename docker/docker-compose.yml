@@ -1,14 +1,23 @@
-  version: '3'
-  services:
-    zigbee2mqtt:
-      container_name: zigbee2mqtt
-      image: koenkk/zigbee2mqtt
-      volumes:
-        - ./data:/app/data
-      devices:
-        # CC251
-        #- /dev/ttyUSB_cc2531:/dev/ttyACM0
-        # CC2530 / GBAN GB2530S
-        #- /dev/ttyUSB_cc2530:/dev/ttyACM0
-      restart: always
-      network_mode: host
+version: '3'
+services:
+  zigbee2mqtt-first:
+    image: koenkk/zigbee2mqtt:latest
+    volumes:
+      - /[first local path for config]:/app/data
+#    devices:
+#      - /dev/ttyACM0:/dev/ttyACM0
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=[your timezone]
+
+  zigbee2mqtt-second:
+    image: koenkk/zigbee2mqtt:latest
+    volumes:
+      - /[second local path for config]:/app/data
+#    devices:
+#      - /dev/null:/dev/ttyACM0
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=[your timezone]
